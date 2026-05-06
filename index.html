@@ -1,8 +1,3 @@
-Você tem razão! O código está incompleto - eu resumi a parte do JavaScript com comentários `// ...` em vez de colocar o código completo. Me desculpe!
-
-Aqui está o **HTML COMPLETO** (sem cortes) com todas as funções JavaScript:
-
-```html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -37,6 +32,7 @@ Aqui está o **HTML COMPLETO** (sem cortes) com todas as funções JavaScript:
         .input-group input:focus { outline: none; border-color: #4a6cf7; background: white; }
         .btn { width: 100%; padding: 15px; border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
         .btn-primary { background: #4a6cf7; color: white; }
+        .btn-primary:hover { background: #3651d6; }
         .btn-success { background: #10b981; color: white; width: auto; }
         .btn-warning { background: #f59e0b; color: #000; width: auto; }
         .btn-danger { background: #ef4444; color: white; width: auto; }
@@ -104,10 +100,8 @@ Aqui está o **HTML COMPLETO** (sem cortes) com todas as funções JavaScript:
         .loading-text { color: white; margin-top: 12px; font-weight: 600; }
         
         .hidden { display: none !important; }
-        
         .filtro-bar { background: var(--card); padding: 16px; border-radius: var(--radius); margin-bottom: 20px; box-shadow: var(--shadow); display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
         .filtro-bar input { padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); }
-        
         .link-esqueci { color: #4a6cf7; cursor: pointer; font-size: 0.85rem; text-decoration: underline; margin-top: 12px; display: inline-block; }
         
         @media (max-width: 768px) { body { padding: 10px; } .stats-grid { grid-template-columns: 1fr 1fr; } .card-grid { grid-template-columns: 1fr; } }
@@ -137,9 +131,10 @@ Aqui está o **HTML COMPLETO** (sem cortes) com todas as funções JavaScript:
 <div id="resetScreen" class="login-screen hidden">
     <div class="login-card">
         <h1>🔑 Redefinir Senha</h1>
-        <p class="subtitle">Apenas para administradores</p>
+        <p class="subtitle">Verificação de segurança</p>
         <div class="input-group"><label>Nome Completo</label><input type="text" id="resetNome" placeholder="Seu nome completo"></div>
         <div class="input-group"><label>CPF do Admin</label><input type="text" id="resetCPF" placeholder="12345678909" maxlength="11"></div>
+        <div class="input-group"><label>Código de Segurança</label><input type="password" id="resetCodigo" placeholder="Código padrão: 123456" maxlength="6"></div>
         <div class="input-group"><label>Nova Senha</label><input type="password" id="resetNovaSenha" placeholder="Mínimo 4 caracteres"></div>
         <div class="input-group"><label>Confirmar Senha</label><input type="password" id="resetConfirmaSenha" placeholder="Repita a senha"></div>
         <button class="btn btn-primary" id="btnConfirmarReset">✅ REDEFINIR</button>
@@ -152,9 +147,7 @@ Aqui está o **HTML COMPLETO** (sem cortes) com todas as funções JavaScript:
     <div class="container">
         <div class="header">
             <h1>💰 Financeiro PRO</h1>
-            <div style="display:flex;align-items:center;gap:10px;">
-                <button class="theme-toggle" id="btnTheme">🌙 Escuro</button>
-            </div>
+            <button class="theme-toggle" id="btnTheme">🌙 Escuro</button>
         </div>
 
         <div class="user-bar">
@@ -229,21 +222,31 @@ Aqui está o **HTML COMPLETO** (sem cortes) com todas as funções JavaScript:
                 <div id="listaCartoes"></div>
             </div>
 
-            <div id="panel-pessoa" class="form-panel">
-                <h3>👥 Gerenciar Pessoas</h3>
-                <div class="form-row">
-                    <div class="form-group"><label>Nome *</label><input type="text" id="pessoaNome" placeholder="Ex: Maria, João"></div>
-                    <div class="form-group"><label>CPF</label><input type="text" id="pessoaCPF" placeholder="00000000000" maxlength="11"></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>WhatsApp</label><input type="text" id="pessoaWhatsApp" placeholder="11999999999"></div>
-                    <div class="form-group"><label>Tipo</label><select id="pessoaTipo"><option value="comum">Usuário comum</option></select></div>
-                </div>
-                <button class="btn btn-success" id="btnSalvarPessoa">✅ SALVAR PESSOA</button>
-                <hr style="margin:20px 0;border-color:var(--border);">
-                <h4>Pessoas Cadastradas</h4>
-                <div id="listaPessoas"></div>
-            </div>
+<div id="panel-pessoa" class="form-panel">
+    <h3>👥 Gerenciar Pessoas</h3>
+    <div class="form-row">
+        <div class="form-group"><label>Nome *</label><input type="text" id="pessoaNome" placeholder="Ex: Maria, João"></div>
+        <div class="form-group"><label>CPF</label><input type="text" id="pessoaCPF" placeholder="00000000000" maxlength="11"></div>
+    </div>
+    <div class="form-row">
+        <div class="form-group"><label>WhatsApp</label><input type="text" id="pessoaWhatsApp" placeholder="11999999999"></div>
+        <div class="form-group">
+            <label>Parentesco</label>
+            <select id="pessoaParentesco">
+                <option value="familiar">👨‍👩‍👧 Familiar</option>
+                <option value="conjuge">👫 Cônjuge</option>
+                <option value="filho">👶 Filho(a)</option>
+                <option value="amigo">🤝 Amigo(a)</option>
+                <option value="cliente">💼 Cliente</option>
+                <option value="outro">👤 Outro</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn btn-success" id="btnSalvarPessoa">✅ SALVAR PESSOA</button>
+    <hr style="margin:20px 0;border-color:var(--border);">
+    <h4>Pessoas Cadastradas</h4>
+    <div id="listaPessoas"></div>
+</div>
 
             <div id="panel-investimento" class="form-panel">
                 <h3>📈 Novo Investimento</h3>
@@ -304,10 +307,9 @@ Aqui está o **HTML COMPLETO** (sem cortes) com todas as funções JavaScript:
 </div>
 
 <script>
-// ============================================
-// CONFIGURAÇÃO
-// ============================================
 const db = window.supabase.createClient('https://wzrsxzhdfmbccicluytb.supabase.co', 'sb_publishable__OGAIY97ObenG-digw9E1Q_4SkuMJkF');
+const CODIGO_SEGURANCA = '123456';
+
 let usuarioLogado = null, isAdmin = false, tabAtual = 'todos', viewAtual = 'cards', paginaAtual = 1;
 const ITENS_POR_PAGINA = 8;
 let despesas = [], receitas = [], investimentos = [], metas = [], cartoes = [], usuariosLista = [], categoriasLista = [];
@@ -321,7 +323,7 @@ function formatarData(data){ if(!data)return'—'; return new Date(data.split('T
 function fMoeda(v){ return parseFloat(v||0).toFixed(2); }
 
 async function carregarTudo(){
-    showLoading();
+    showLoading('Carregando dados...');
     try {
         const [d, r, i, m, c, u, cat] = await Promise.all([
             db.from('despesas').select('*').eq('admin_id', usuarioLogado.id).order('data',{ascending:false}),
@@ -335,45 +337,68 @@ async function carregarTudo(){
         despesas = d.data || []; receitas = r.data || []; investimentos = i.data || [];
         metas = m.data || []; cartoes = c.data || []; usuariosLista = u.data || []; categoriasLista = cat.data || [];
         if(!isAdmin && usuarioLogado) despesas = despesas.filter(g => g.usuario_id == usuarioLogado.id);
-    } catch(e){ console.error('❌',e); }
+        console.log('✅ Dados carregados. Usuarios:', usuariosLista.length, 'Despesas:', despesas.length);
+    } catch(e){ console.error('❌ Erro:', e); }
     hideLoading();
     popularSelects();
     atualizarDashboard();
 }
 
 function popularSelects(){
-    document.getElementById('despCategoria').innerHTML = (categoriasLista.length>0 ? categoriasLista : [{id:1,nome:'Supermercado',icone:'🛒'},{id:3,nome:'Alimentação',icone:'🍔'},{id:5,nome:'Transporte',icone:'🚗'},{id:6,nome:'Moradia',icone:'🏠'},{id:15,nome:'Outros',icone:'📦'}]).map(c=>`<option value="${c.id}">${c.icone} ${c.nome}</option>`).join('');
-    document.getElementById('despCartao').innerHTML = '<option value="">Sem cartão</option>' + cartoes.map(c=>`<option value="${c.id}">💳 ${c.nome_cartao} (vence dia ${c.dia_vencimento})</option>`).join('');
+    const selCat = document.getElementById('despCategoria');
+    if(categoriasLista.length > 0){
+        selCat.innerHTML = categoriasLista.map(c => `<option value="${c.id}">${c.icone} ${c.nome}</option>`).join('');
+    } else {
+        selCat.innerHTML = '<option value="1">🛒 Supermercado</option><option value="3">🍔 Alimentação</option><option value="5">🚗 Transporte</option><option value="6">🏠 Moradia</option><option value="7">🎮 Lazer</option><option value="15">📦 Outros</option>';
+    }
+    document.getElementById('despCartao').innerHTML = '<option value="">Sem cartão</option>' + cartoes.map(c => `<option value="${c.id}">💳 ${c.nome_cartao} (vence dia ${c.dia_vencimento})</option>`).join('');
+
+    // Montar lista de usuários garantindo que o admin apareça
+    const listaUsuarios = [...usuariosLista];
+    if(!listaUsuarios.find(u => u.cpf === '12345678909')){
+        listaUsuarios.unshift({ id: 1, nome: 'Administrador', cpf: '12345678909', tipo: 'admin', parentesco: 'admin' });
+    }
     
-    const lista = [...usuariosLista];
-    if(!lista.find(u=>u.cpf==='12345678909')) lista.push({id:1,nome:'Administrador',cpf:'12345678909',tipo:'admin'});
-    document.getElementById('despUsuario').innerHTML = lista.map(u=>`<option value="${u.id}">👤 ${u.nome} ${u.tipo==='admin'?'(Admin)':''}</option>`).join('');
-    
-    document.getElementById('listaCartoes').innerHTML = cartoes.map(c=>{
-        const gf=despesas.filter(g=>g.cartao_id==c.id&&!g.pago); const tf=gf.reduce((s,g)=>s+parseFloat(g.valor),0);
-        return `<div style="padding:10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;"><span>💳 ${c.nome_cartao} - ${c.bandeira||''} | Vence dia ${c.dia_vencimento} | Fatura: R$ ${fMoeda(tf)}</span><button onclick="excluirCartao(${c.id})" class="btn-sm btn-danger">🗑️</button></div>`;
-    }).join('')||'<p>Nenhum cartão.</p>';
-    
-    document.getElementById('listaPessoas').innerHTML = usuariosLista.map(u=>`
+    // ✅ SELECT "Quem gastou" - com ícones de parentesco
+    document.getElementById('despUsuario').innerHTML = listaUsuarios.map(u => {
+        const icone = u.parentesco==='admin'?'👑':u.parentesco==='familiar'?'👨‍👩‍👧':u.parentesco==='conjuge'?'👫':u.parentesco==='filho'?'👶':u.parentesco==='amigo'?'🤝':u.parentesco==='cliente'?'💼':'👤';
+        return `<option value="${u.id}">${icone} ${u.nome} ${u.tipo==='admin'?'(Admin)':''}</option>`;
+    }).join('');
+
+    // ✅ LISTA de pessoas cadastradas (painel Pessoas)
+    document.getElementById('listaPessoas').innerHTML = listaUsuarios.map(u => {
+        const icone = u.parentesco==='admin'?'👑':u.parentesco==='familiar'?'👨‍👩‍👧':u.parentesco==='conjuge'?'👫':u.parentesco==='filho'?'👶':u.parentesco==='amigo'?'🤝':u.parentesco==='cliente'?'💼':'👤';
+        const parentescoNome = u.parentesco==='admin'?'Administrador':u.parentesco==='familiar'?'Familiar':u.parentesco==='conjuge'?'Cônjuge':u.parentesco==='filho'?'Filho(a)':u.parentesco==='amigo'?'Amigo(a)':u.parentesco==='cliente'?'Cliente':'Outro';
+        return `
         <div style="padding:10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-            <span>👤 ${u.nome} | CPF: ${formatarCPF(u.cpf||'')} | ${u.whatsapp||'Sem WhatsApp'} | <span class="badge ${u.tipo==='admin'?'badge-admin':''}" style="font-size:0.6rem;">${u.tipo}</span></span>
-            ${u.cpf!=='12345678909'?`<button onclick="excluirPessoa(${u.id})" class="btn-sm btn-danger">🗑️</button>`:'<span style="font-size:0.6rem;">Admin padrão</span>'}
-        </div>`).join('')||'<p>Nenhuma pessoa cadastrada.</p>';
+            <span>${icone} <strong>${u.nome}</strong> | ${parentescoNome} ${u.whatsapp?' | 📱 '+u.whatsapp:''}</span>
+            ${u.cpf !== '12345678909' ? `<button onclick="excluirPessoa(${u.id})" class="btn-sm btn-danger">🗑️</button>` : '<span style="font-size:0.6rem;">Admin padrão</span>'}
+        </div>`;
+    }).join('') || '<p>Nenhuma pessoa cadastrada.</p>';
+
+    // Lista de cartões
+    document.getElementById('listaCartoes').innerHTML = cartoes.map(c => {
+        const gf = despesas.filter(g => g.cartao_id == c.id && !g.pago);
+        const tf = gf.reduce((s,g) => s + parseFloat(g.valor), 0);
+        return `<div style="padding:10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;"><span>💳 ${c.nome_cartao} - ${c.bandeira||''} | Vence dia ${c.dia_vencimento} | Fatura: R$ ${fMoeda(tf)}</span><button onclick="excluirCartao(${c.id})" class="btn-sm btn-danger">🗑️</button></div>`;
+    }).join('') || '<p>Nenhum cartão.</p>';
 }
 
 function atualizarDashboard(){
-    const agora=new Date(); const mesAtual=`${agora.getFullYear()}-${String(agora.getMonth()+1).padStart(2,'0')}`;
-    const gastosMes=despesas.filter(g=>g.data&&g.data.startsWith(mesAtual)&&!g.pago);
-    const totalGastos=gastosMes.reduce((s,g)=>s+parseFloat(g.valor),0);
-    const fixas=despesas.filter(g=>g.recorrente&&!g.pago); const totalFixas=fixas.reduce((s,g)=>s+parseFloat(g.valor),0);
-    const totalRendas=receitas.reduce((s,r)=>s+parseFloat(r.valor),0);
-    const totalInv=investimentos.reduce((s,i)=>s+parseFloat(i.valor),0);
-    const saldo=totalRendas-totalGastos;
-    const pct=totalRendas>0?(totalGastos/totalRendas)*100:0;
-    let cp='#10b981'; if(pct>50&&pct<=80)cp='#f59e0b'; if(pct>80)cp='#ef4444';
-    
-    document.getElementById('statsGrid').innerHTML=`
-        <div class="stat-card" style="border-left-color:${saldo>=0?cp:'#ef4444'};"><div class="stat-icon">${saldo>=0?'🟢':'🔴'}</div><div class="stat-label">Saldo</div><div class="stat-value" style="color:${saldo>=0?cp:'#ef4444'};">R$ ${fMoeda(saldo)}</div><div class="stat-sub">${pct.toFixed(0)}% da renda comprometida</div><div class="progress-bar-custom"><div class="progress-fill-custom" style="width:${Math.min(pct,100)}%;background:${cp};"></div></div></div>
+    const agora = new Date();
+    const mesAtual = `${agora.getFullYear()}-${String(agora.getMonth()+1).padStart(2,'0')}`;
+    const gastosMes = despesas.filter(g => g.data && g.data.startsWith(mesAtual) && !g.pago);
+    const totalGastos = gastosMes.reduce((s,g) => s + parseFloat(g.valor), 0);
+    const fixas = despesas.filter(g => g.recorrente && !g.pago);
+    const totalFixas = fixas.reduce((s,g) => s + parseFloat(g.valor), 0);
+    const totalRendas = receitas.reduce((s,r) => s + parseFloat(r.valor), 0);
+    const totalInv = investimentos.reduce((s,i) => s + parseFloat(i.valor), 0);
+    const saldo = totalRendas - totalGastos;
+    const pct = totalRendas > 0 ? (totalGastos / totalRendas) * 100 : 0;
+    let cp = '#10b981'; if(pct > 50 && pct <= 80) cp = '#f59e0b'; if(pct > 80) cp = '#ef4444';
+
+    document.getElementById('statsGrid').innerHTML = `
+        <div class="stat-card" style="border-left-color:${saldo>=0?cp:'#ef4444'};"><div class="stat-icon">${saldo>=0?'🟢':'🔴'}</div><div class="stat-label">Saldo</div><div class="stat-value" style="color:${saldo>=0?cp:'#ef4444'};">R$ ${fMoeda(saldo)}</div><div class="stat-sub">${pct.toFixed(0)}% comprometido</div><div class="progress-bar-custom"><div class="progress-fill-custom" style="width:${Math.min(pct,100)}%;background:${cp};"></div></div></div>
         <div class="stat-card"><div class="stat-icon">💵</div><div class="stat-label">Receitas</div><div class="stat-value">R$ ${fMoeda(totalRendas)}</div></div>
         <div class="stat-card"><div class="stat-icon">📉</div><div class="stat-label">Despesas</div><div class="stat-value">R$ ${fMoeda(totalGastos)}</div><div class="stat-sub">🔄 Fixas: R$ ${fMoeda(totalFixas)}</div></div>
         <div class="stat-card"><div class="stat-icon">📈</div><div class="stat-label">Investido</div><div class="stat-value">R$ ${fMoeda(totalInv)}</div></div>
@@ -382,42 +407,42 @@ function atualizarDashboard(){
 }
 
 function getDadosFiltrados(){
-    const mesFiltro=document.getElementById('filtroMes').value;
-    const texto=document.getElementById('filtroTexto').value.toLowerCase();
-    let dados=[];
+    const mesFiltro = document.getElementById('filtroMes').value;
+    const texto = document.getElementById('filtroTexto').value.toLowerCase();
+    let dados = [];
     switch(tabAtual){
-        case 'todos': dados=[...despesas.map(d=>({...d,tipo:'despesa',cor:'#ef4444',sinal:'-'})),...receitas.map(r=>({...r,tipo:'renda',cor:'#10b981',sinal:'+'})),...investimentos.map(i=>({...i,tipo:'investimento',cor:'#8b5cf6',sinal:'📈'}))]; break;
-        case 'despesas': dados=despesas.filter(d=>!d.recorrente).map(d=>({...d,tipo:'despesa',cor:'#ef4444',sinal:'-'})); break;
-        case 'fixas': dados=despesas.filter(d=>d.recorrente).map(d=>({...d,tipo:'fixa',cor:'#f59e0b',sinal:'🔄'})); break;
-        case 'rendas': dados=receitas.map(r=>({...r,tipo:'renda',cor:'#10b981',sinal:'+'})); break;
-        case 'investimentos': dados=investimentos.map(i=>({...i,tipo:'investimento',cor:'#8b5cf6',sinal:'📈'})); break;
+        case 'todos': dados = [...despesas.map(d=>({...d,tipo:'despesa',cor:'#ef4444',sinal:'-'})),...receitas.map(r=>({...r,tipo:'renda',cor:'#10b981',sinal:'+'})),...investimentos.map(i=>({...i,tipo:'investimento',cor:'#8b5cf6',sinal:'📈'}))]; break;
+        case 'despesas': dados = despesas.filter(d=>!d.recorrente).map(d=>({...d,tipo:'despesa',cor:'#ef4444',sinal:'-'})); break;
+        case 'fixas': dados = despesas.filter(d=>d.recorrente).map(d=>({...d,tipo:'fixa',cor:'#f59e0b',sinal:'🔄'})); break;
+        case 'rendas': dados = receitas.map(r=>({...r,tipo:'renda',cor:'#10b981',sinal:'+'})); break;
+        case 'investimentos': dados = investimentos.map(i=>({...i,tipo:'investimento',cor:'#8b5cf6',sinal:'📈'})); break;
         case 'metas': return metas;
         case 'cartoes_tab': return cartoes;
     }
-    if(mesFiltro) dados=dados.filter(d=>d.data&&d.data.startsWith(mesFiltro));
-    if(texto) dados=dados.filter(d=>(d.descricao||'').toLowerCase().includes(texto));
-    dados.sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+    if(mesFiltro) dados = dados.filter(d => d.data && d.data.startsWith(mesFiltro));
+    if(texto) dados = dados.filter(d => (d.descricao||'').toLowerCase().includes(texto));
+    dados.sort((a,b) => (b.data||'').localeCompare(a.data||''));
     return dados;
 }
 
 function renderizarConteudo(){
-    const container=document.getElementById('conteudoContainer');
-    const tabelaCt=document.getElementById('tabelaContainer');
-    const graficoCt=document.getElementById('graficoContainer');
-    container.innerHTML=''; tabelaCt.classList.add('hidden'); graficoCt.classList.add('hidden');
-    if(chartInstance){ chartInstance.destroy(); chartInstance=null; }
-    
-    if(tabAtual==='grafico'){ graficoCt.classList.remove('hidden'); setTimeout(renderizarGrafico,100); document.getElementById('pagination').innerHTML=''; return; }
-    if(tabAtual==='metas'){ document.getElementById('pagination').innerHTML=''; container.innerHTML=metas.length===0?'<p style="text-align:center;padding:40px;">Nenhuma meta.</p>':'<div class="card-grid">'+metas.map(m=>{const pct=Math.min((m.valor_atual/m.valor_meta)*100,100);return`<div class="item-card"><div class="item-card-header"><span class="item-card-title">🎯 ${m.nome}</span><span>${pct.toFixed(0)}%</span></div><div class="progress-bar-custom"><div class="progress-fill-custom" style="width:${pct}%;background:linear-gradient(90deg,#4a6cf7,#10b981);"></div></div><p>💰 R$ ${fMoeda(m.valor_atual)} / R$ ${fMoeda(m.valor_meta)}</p>${m.data_limite?`<p style="font-size:0.8rem;">📅 ${formatarData(m.data_limite)}</p>`:''}</div>`;}).join('')+'</div>'; return; }
-    if(tabAtual==='cartoes_tab'){ document.getElementById('pagination').innerHTML=''; container.innerHTML=cartoes.length===0?'<p style="text-align:center;padding:40px;">Nenhum cartão.</p>':'<div class="card-grid">'+cartoes.map(c=>{const gf=despesas.filter(g=>g.cartao_id==c.id&&!g.pago);const tf=gf.reduce((s,g)=>s+parseFloat(g.valor),0);const pu=(c.limite||0)>0?(tf/c.limite)*100:0;return`<div class="item-card"><div class="item-card-header"><span class="item-card-title">💳 ${c.nome_cartao}</span><span>${c.bandeira||''}</span></div><p>📅 Vence dia <strong>${c.dia_vencimento}</strong></p><p>🧾 Fatura: <strong style="color:#ef4444;">R$ ${fMoeda(tf)}</strong></p><div class="progress-bar-custom"><div class="progress-fill-custom" style="width:${Math.min(pu,100)}%;background:${pu>80?'#ef4444':'#10b981'};"></div></div></div>`;}).join('')+'</div>'; return; }
-    
-    const dados=getDadosFiltrados();
-    const totalPag=Math.ceil(dados.length/ITENS_POR_PAGINA)||1;
+    const container = document.getElementById('conteudoContainer');
+    const tabelaCt = document.getElementById('tabelaContainer');
+    const graficoCt = document.getElementById('graficoContainer');
+    container.innerHTML = ''; tabelaCt.classList.add('hidden'); graficoCt.classList.add('hidden');
+    if(chartInstance){ chartInstance.destroy(); chartInstance = null; }
+
+    if(tabAtual === 'grafico'){ graficoCt.classList.remove('hidden'); setTimeout(renderizarGrafico,100); document.getElementById('pagination').innerHTML=''; return; }
+    if(tabAtual === 'metas'){ document.getElementById('pagination').innerHTML=''; container.innerHTML = metas.length===0?'<p style="text-align:center;padding:40px;">Nenhuma meta.</p>':'<div class="card-grid">'+metas.map(m=>{const pct=Math.min((m.valor_atual/m.valor_meta)*100,100);return`<div class="item-card"><div class="item-card-header"><span class="item-card-title">🎯 ${m.nome}</span><span>${pct.toFixed(0)}%</span></div><div class="progress-bar-custom"><div class="progress-fill-custom" style="width:${pct}%;background:linear-gradient(90deg,#4a6cf7,#10b981);"></div></div><p>💰 R$ ${fMoeda(m.valor_atual)} / R$ ${fMoeda(m.valor_meta)}</p>${m.data_limite?`<p style="font-size:0.8rem;">📅 ${formatarData(m.data_limite)}</p>`:''}</div>`;}).join('')+'</div>'; return; }
+    if(tabAtual === 'cartoes_tab'){ document.getElementById('pagination').innerHTML=''; container.innerHTML = cartoes.length===0?'<p style="text-align:center;padding:40px;">Nenhum cartão.</p>':'<div class="card-grid">'+cartoes.map(c=>{const gf=despesas.filter(g=>g.cartao_id==c.id&&!g.pago);const tf=gf.reduce((s,g)=>s+parseFloat(g.valor),0);const pu=(c.limite||0)>0?(tf/c.limite)*100:0;return`<div class="item-card"><div class="item-card-header"><span class="item-card-title">💳 ${c.nome_cartao}</span><span>${c.bandeira||''}</span></div><p>📅 Vence dia <strong>${c.dia_vencimento}</strong></p><p>🧾 Fatura: <strong style="color:#ef4444;">R$ ${fMoeda(tf)}</strong></p><div class="progress-bar-custom"><div class="progress-fill-custom" style="width:${Math.min(pu,100)}%;background:${pu>80?'#ef4444':'#10b981'};"></div></div></div>`;}).join('')+'</div>'; return; }
+
+    const dados = getDadosFiltrados();
+    const totalPag = Math.ceil(dados.length/ITENS_POR_PAGINA)||1;
     if(paginaAtual>totalPag) paginaAtual=totalPag;
-    const paginados=dados.slice((paginaAtual-1)*ITENS_POR_PAGINA,paginaAtual*ITENS_POR_PAGINA);
-    
+    const paginados = dados.slice((paginaAtual-1)*ITENS_POR_PAGINA,paginaAtual*ITENS_POR_PAGINA);
+
     if(dados.length===0){ container.innerHTML='<p style="text-align:center;padding:40px;">Nenhum registro.</p>'; document.getElementById('pagination').innerHTML=''; return; }
-    
+
     if(viewAtual==='cards'){
         container.classList.remove('hidden');
         container.innerHTML='<div class="card-grid">'+paginados.map(d=>{
@@ -432,7 +457,7 @@ function renderizarConteudo(){
         document.getElementById('tabelaHead').innerHTML='<tr><th>Tipo</th><th>Descrição</th><th>Valor</th><th>Data</th><th>Status</th></tr>';
         document.getElementById('tabelaBody').innerHTML=paginados.map(d=>`<tr><td>${d.sinal} ${d.tipo}</td><td>${d.descricao||'—'}</td><td style="color:${d.cor};">R$ ${fMoeda(d.valor)}</td><td>${formatarData(d.data)}</td><td>${d.tipo==='despesa'?(d.pago?'Pago':'Pendente'):'—'}</td></tr>`).join('');
     }
-    
+
     let pagHTML='';
     for(let i=1;i<=totalPag;i++) pagHTML+=`<button onclick="mudarPagina(${i})" class="${i===paginaAtual?'active':''}">${i}</button>`;
     document.getElementById('pagination').innerHTML=pagHTML;
@@ -449,7 +474,6 @@ function mudarPagina(p){ paginaAtual=p; renderizarConteudo(); }
 function aplicarFiltros(){ paginaAtual=1; renderizarConteudo(); }
 function limparFiltros(){ document.getElementById('filtroMes').value=''; document.getElementById('filtroTexto').value=''; paginaAtual=1; renderizarConteudo(); }
 
-// AÇÕES
 async function salvarDespesa(){
     const valor=parseFloat(document.getElementById('despValor').value);
     if(!valor||valor<=0)return alert('❌ Informe o valor!');
@@ -494,13 +518,28 @@ async function salvarCartao(){
 async function excluirCartao(id){ if(confirm('Excluir cartão?')){ await db.from('cartoes').delete().eq('id',id); carregarTudo(); } }
 
 async function salvarPessoa(){
-    const nome=document.getElementById('pessoaNome').value.trim();
-    if(!nome)return alert('❌ Informe o nome!');
-    const cpf=document.getElementById('pessoaCPF').value.trim();
-    if(cpf && cpf.length===11 && !validarCPF(cpf))return alert('❌ CPF inválido!');
-    await db.from('usuarios').insert([{nome,cpf:cpf||null,whatsapp:document.getElementById('pessoaWhatsApp').value.trim(),tipo:'comum'}]);
-    document.getElementById('pessoaNome').value=''; document.getElementById('pessoaCPF').value=''; document.getElementById('pessoaWhatsApp').value='';
-    alert('✅ Pessoa cadastrada!'); carregarTudo();
+    const nome = document.getElementById('pessoaNome').value.trim();
+    if(!nome) return alert('❌ Informe o nome!');
+    const cpf = document.getElementById('pessoaCPF').value.trim();
+    if(cpf && cpf.length===11 && !validarCPF(cpf)) return alert('❌ CPF inválido!');
+    
+    const parentesco = document.getElementById('pessoaParentesco').value;
+    
+    const { data, error } = await db.from('usuarios').insert([{
+        nome,
+        cpf: cpf || null,
+        whatsapp: document.getElementById('pessoaWhatsApp').value.trim(),
+        tipo: 'comum',
+        parentesco: parentesco
+    }]).select();
+    
+    if(error){ alert('❌ Erro ao salvar: ' + error.message); return; }
+    console.log('✅ Pessoa salva:', data);
+    document.getElementById('pessoaNome').value = '';
+    document.getElementById('pessoaCPF').value = '';
+    document.getElementById('pessoaWhatsApp').value = '';
+    alert('✅ Pessoa cadastrada com sucesso!');
+    await carregarTudo();
 }
 async function excluirPessoa(id){ if(confirm('Excluir pessoa?')){ await db.from('usuarios').delete().eq('id',id); carregarTudo(); } }
 
@@ -525,82 +564,87 @@ function exportarExcel(){
 }
 
 async function redefinirSenha(){
-    const nome=document.getElementById('resetNome').value.trim();
-    const cpf=document.getElementById('resetCPF').value.trim();
-    const nova=document.getElementById('resetNovaSenha').value;
-    const confirma=document.getElementById('resetConfirmaSenha').value;
-    if(!nome)return alert('Digite seu nome!');
-    if(!cpf||!validarCPF(cpf))return alert('CPF inválido!');
-    if(nova.length<4)return alert('Senha deve ter 4+ caracteres!');
-    if(nova!==confirma)return alert('Senhas não conferem!');
+    const nome = document.getElementById('resetNome').value.trim();
+    const cpf = document.getElementById('resetCPF').value.trim();
+    const codigo = document.getElementById('resetCodigo').value.trim();
+    const nova = document.getElementById('resetNovaSenha').value;
+    const confirma = document.getElementById('resetConfirmaSenha').value;
+
+    if(!nome) return alert('Digite seu nome!');
+    if(!cpf || !validarCPF(cpf)) return alert('CPF inválido!');
+    if(codigo !== CODIGO_SEGURANCA) return alert('❌ Código de segurança incorreto! O código padrão é: ' + CODIGO_SEGURANCA);
+    if(nova.length < 4) return alert('Senha deve ter 4+ caracteres!');
+    if(nova !== confirma) return alert('Senhas não conferem!');
+
     showLoading('Redefinindo...');
-    const {data}=await db.from('usuarios').select('*').eq('cpf',cpf).eq('tipo','admin');
-    if(!data||data.length===0){ hideLoading(); return alert('❌ Admin não encontrado!'); }
-    await db.from('usuarios').update({senha:nova,nome}).eq('cpf',cpf);
-    hideLoading(); alert('✅ Senha redefinida!');
+    const { data } = await db.from('usuarios').select('*').eq('cpf', cpf).eq('tipo', 'admin');
+    if(!data || data.length === 0){ hideLoading(); return alert('❌ Admin não encontrado!'); }
+    await db.from('usuarios').update({ senha: nova, nome }).eq('cpf', cpf);
+    hideLoading();
+    alert('✅ Senha redefinida com sucesso!');
     document.getElementById('resetScreen').classList.add('hidden');
     document.getElementById('loginScreen').classList.remove('hidden');
+    document.getElementById('resetCodigo').value = '';
+    document.getElementById('resetNovaSenha').value = '';
+    document.getElementById('resetConfirmaSenha').value = '';
 }
 
 // EVENTOS
-document.addEventListener('DOMContentLoaded',()=>{
+document.addEventListener('DOMContentLoaded', () => {
     if(localStorage.getItem('theme')==='dark'){ document.body.classList.add('dark'); document.getElementById('btnTheme').textContent='☀️ Claro'; }
     document.getElementById('btnTheme').addEventListener('click',()=>{ document.body.classList.toggle('dark'); const d=document.body.classList.contains('dark'); document.getElementById('btnTheme').textContent=d?'☀️ Claro':'🌙 Escuro'; localStorage.setItem('theme',d?'dark':'light'); });
-    
     document.getElementById('despRecorrente').addEventListener('change',function(){ document.getElementById('despDiaVenc').disabled=!this.checked; });
-    
-    document.getElementById('btnLogin').addEventListener('click',async()=>{
+
+    document.getElementById('btnLogin').addEventListener('click', async () => {
         const nome=document.getElementById('loginNome').value.trim();
         const cpf=document.getElementById('loginCPF').value.trim();
         const senha=document.getElementById('loginSenha').value.trim();
-        if(!nome)return alert('Digite seu nome!');
-        if(!cpf||!validarCPF(cpf))return alert('CPF inválido!');
+        if(!nome) return alert('Digite seu nome!');
+        if(!cpf||!validarCPF(cpf)) return alert('CPF inválido!');
         showLoading('Autenticando...');
         if(cpf==='12345678909'){
-            const {data}=await db.from('usuarios').select('*').eq('cpf',cpf);
-            const senhaSalva=(data&&data.length>0)?data[0].senha:'admin';
-            if(senha===senhaSalva||senha==='admin'){
-                if(!data||data.length===0){ await db.from('usuarios').insert([{nome,cpf,tipo:'admin',senha:'admin'}]); }
-                usuarioLogado=data?.[0]||{id:1,nome,cpf,tipo:'admin'}; isAdmin=true;
+            const { data } = await db.from('usuarios').select('*').eq('cpf', cpf);
+            const senhaSalva = (data && data.length>0) ? data[0].senha : 'admin';
+            if(senha === senhaSalva || senha === 'admin'){
+                if(!data || data.length===0){ await db.from('usuarios').insert([{nome,cpf,tipo:'admin',senha:'admin'}]); }
+                usuarioLogado = data?.[0] || {id:1,nome,cpf,tipo:'admin'}; isAdmin = true;
             } else { hideLoading(); return alert('❌ Senha incorreta!'); }
         } else {
-            const {data}=await db.from('usuarios').select('*').eq('cpf',cpf);
-            if(data&&data.length>0){ usuarioLogado=data[0]; isAdmin=usuarioLogado.tipo==='admin'; }
-            else { const {data:novo}=await db.from('usuarios').insert([{nome,cpf,tipo:'comum'}]).select(); usuarioLogado=novo[0]; isAdmin=false; }
+            const { data } = await db.from('usuarios').select('*').eq('cpf',cpf);
+            if(data && data.length>0){ usuarioLogado=data[0]; isAdmin=usuarioLogado.tipo==='admin'; }
+            else { const { data:novo } = await db.from('usuarios').insert([{nome,cpf,tipo:'comum'}]).select(); usuarioLogado=novo[0]; isAdmin=false; }
         }
         hideLoading();
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('mainScreen').classList.remove('hidden');
-        document.getElementById('displayNome').textContent=`${usuarioLogado.nome} (${formatarCPF(usuarioLogado.cpf)})`;
+        document.getElementById('displayNome').textContent = `${usuarioLogado.nome} (${formatarCPF(usuarioLogado.cpf)})`;
         if(isAdmin){ document.getElementById('badgeAdmin').classList.remove('hidden'); document.getElementById('adminSection').classList.remove('hidden'); }
         carregarTudo();
     });
-    
+
     document.getElementById('btnEsqueciSenha').addEventListener('click',()=>{ document.getElementById('loginScreen').classList.add('hidden'); document.getElementById('resetScreen').classList.remove('hidden'); });
     document.getElementById('btnVoltarLogin').addEventListener('click',()=>{ document.getElementById('resetScreen').classList.add('hidden'); document.getElementById('loginScreen').classList.remove('hidden'); });
-    document.getElementById('btnConfirmarReset').addEventListener('click',redefinirSenha);
+    document.getElementById('btnConfirmarReset').addEventListener('click', redefinirSenha);
     document.getElementById('btnLogout').addEventListener('click',()=>{ if(confirm('Sair?')){ usuarioLogado=null; document.getElementById('mainScreen').classList.add('hidden'); document.getElementById('loginScreen').classList.remove('hidden'); } });
-    
+
     document.querySelectorAll('.admin-nav button').forEach(b=>b.addEventListener('click',()=>{ document.querySelectorAll('.admin-nav button').forEach(x=>x.classList.remove('active')); b.classList.add('active'); document.querySelectorAll('.form-panel').forEach(p=>p.classList.remove('active')); document.getElementById('panel-'+b.dataset.panel).classList.add('active'); }));
     document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active'); tabAtual=t.dataset.tab; paginaAtual=1; renderizarConteudo(); }));
     document.querySelectorAll('.view-btn').forEach(b=>b.addEventListener('click',()=>{ document.querySelectorAll('.view-btn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); viewAtual=b.dataset.view; renderizarConteudo(); }));
-    
-    document.getElementById('btnSalvarDespesa').addEventListener('click',salvarDespesa);
-    document.getElementById('btnSalvarRenda').addEventListener('click',salvarRenda);
-    document.getElementById('btnSalvarCartao').addEventListener('click',salvarCartao);
-    document.getElementById('btnSalvarPessoa').addEventListener('click',salvarPessoa);
-    document.getElementById('btnSalvarInvestimento').addEventListener('click',salvarInvestimento);
-    document.getElementById('btnSalvarMeta').addEventListener('click',salvarMeta);
-    
-    document.getElementById('despData').value=new Date().toISOString().split('T')[0];
-    
+
+    document.getElementById('btnSalvarDespesa').addEventListener('click', salvarDespesa);
+    document.getElementById('btnSalvarRenda').addEventListener('click', salvarRenda);
+    document.getElementById('btnSalvarCartao').addEventListener('click', salvarCartao);
+    document.getElementById('btnSalvarPessoa').addEventListener('click', salvarPessoa);
+    document.getElementById('btnSalvarInvestimento').addEventListener('click', salvarInvestimento);
+    document.getElementById('btnSalvarMeta').addEventListener('click', salvarMeta);
+
+    document.getElementById('despData').value = new Date().toISOString().split('T')[0];
     ['loginNome','loginCPF','loginSenha'].forEach(id=>{ document.getElementById(id)?.addEventListener('keypress',e=>{ if(e.key==='Enter')document.getElementById('btnLogin').click(); }); });
-    
-    console.log('✅ Financeiro PRO COMPLETO!');
+
+    console.log('✅ Financeiro PRO v3 - Pronto!');
     console.log('👑 Admin: CPF 12345678909 / Senha: admin');
-    console.log('👥 Painel Pessoas | 🔑 Redefinir Senha | 📲 WhatsApp | 📊 Dashboard');
+    console.log('🔐 Código segurança redefinição: ' + CODIGO_SEGURANCA);
 });
 </script>
 </body>
 </html>
-```
